@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>A/B Testing Sandbox</title>
+
+    
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJD80290PD"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EJD80290PD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-      gtag('config', 'G-EJD80290PD');
+  gtag('config', 'G-EJD80290PD');
+</script>
 
+    
+<script>
       // 1. A/B Testing Assignment Logic (50/50 Split)
       let variant = localStorage.getItem('ab_test_variant');
       if (!variant) {
