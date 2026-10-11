@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>A/B Testing Sandbox</title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EJD80290PD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-EJD80290PD');
+
+      // 1. A/B Testing Assignment Logic (50/50 Split)
+      let variant = localStorage.getItem('ab_test_variant');
+      if (!variant) {
+        variant = Math.random() < 0.5 ? 'variant_a' : 'variant_b';
+        localStorage.setItem('ab_test_variant', variant);
+      }
+
+      // 2. Execute Visual Changes Based on Variant
+      window.addEventListener('DOMContentLoaded', (event) => {
+        const ctaButton = document.getElementById('cta-button');
+        
+        if (variant === 'variant_b') {
+          // Variant B: Green button with modified text
+          ctaButton.innerText = 'Get Instant Access Free';
+          ctaButton.style.backgroundColor = '#16a34a'; 
+        } else {
+          // Variant A (Control): Blue button with original text
+          ctaButton.innerText = 'Start Learning Today';
+          ctaButton.style.backgroundColor = '#2563eb';
+        }
+
+        // 3. Send Experiment Impression to GA4
+        gtag('event', 'experiment_impression', {
+          'experiment_id': 'cta_button_color_test',
+          'variant_id': variant
+        });
+
+        // 4. Track Clicks as Conversion Events
+        ctaButton.addEventListener('click', function() {
+          gtag('event', 'conversion_cta_click', {
+            'experiment_id': 'cta_button_color_test',
+            'variant_id': variant
+          });
+          alert('Conversion tracked for ' + variant + '!');
+        });
+      });
+    </script>
+</head>
+<body>
+    <main style="text-align: center; margin-top: 100px; font-family: sans-serif;">
+        <h1>Master Digital Product Management</h1>
+        <p>Learn how to optimize conversion rates using data.</p>
+        
+        <!-- The CTA button we are testing -->
+        <button id="cta-button" style="padding: 15px 30px; font-size: 18px; color: white; border: none; border-radius: 6px; cursor: pointer;">
+            Loading...
+        </button>
+    </main>
+</body>
+</html>
